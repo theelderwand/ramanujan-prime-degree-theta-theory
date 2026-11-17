@@ -1,0 +1,1253 @@
+\documentclass[11pt]{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage[margin=1in]{geometry}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem*{question}{Question}
+\newtheorem*{openproblem}{Open Problem}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\pprod}{p_{\mathrm{prod}}}
+
+\title[Modular equations of degrees 11, 13, 17, and a conjecture for general prime degree]{The Degree-Eleven, Degree-Thirteen, and Degree-Seventeen Modular Equations,\\ and a Conjecture for General Prime Degree,\\ in Ramanujan's Prime-Degree Theta Function Theory}
+\author{Ashwin Sathya Raghunathan}
+\date{\today}
+\subjclass[2020]{11F27, 11F11, 33D10, 11Y40}
+\keywords{Ramanujan theta functions, modular equations, eta-quotients, Sturm bound, Atkin--Lehner involution}
+
+\begin{document}
+
+\begin{abstract}
+Ramanujan recorded, in a marginal note at the end of Section 12 of Chapter 20 of
+his second notebook, that the theta functions $\varphi(q^{1/n})$, $\psi(q^{1/n})$,
+$f(-q^{1/n})$ for prime $n$ can be expressed as a sum of $\frac12(n-1)$ $n$th roots
+plus $\varphi(q^n)$, and that the auxiliary equations needed are quadratics only for
+degrees $5, 17, 257$, cubics for $7, 13, 19, 37, 73, 97, 109, 163, 193$, and quintics
+for $11, 41, 101$. The cubic, quintic, and septic cases of this envisioned theory
+have been proved in recent work of Berndt--Reb\'ak and Reb\'ak; no case for any prime
+$p \geq 11$ was known. We find and prove the degree-$11$ modular equation: with
+$m = \varphi^2(q)/\varphi^2(q^{11})$ and $\pprod = 32q^5\chi(q)/\chi^{11}(q^{11})$,
+writing $Y = m^2$ and $P = \pprod/32$, the explicit relation $G(Y,P) = 0$ holds,
+a plane quintic of genus $2$ with small integer coefficients whose pure parts are
+the perfect fifth powers $(1-Y)^5$ and $(1+32P)^5$; it is proved by the Sturm-bound
+method on $\Gamma_0(44)$. We prove the next two cases by the same method: the
+degree-$13$ modular equation $F(m,P) = 0$, a plane septic of genus $2$ proved on
+$\Gamma_0(52)$, and the degree-$17$ modular equation $F(m,P) = 0$, a plane curve of
+degree $12$ and genus $3$ proved on $\Gamma_0(68)$. In all three cases the pure parts
+of the relation are perfect powers with exponents equal to the degrees, and the map
+$X_0(4p) \to C$ has degree $2$. We also prove a general product formula for the product
+of the dissection terms, valid for every odd $n$, by an elementary argument from the
+Jacobi triple product; verify the dissection, the three flagship evaluations, and
+eleven class invariants computationally to 50 digits; give Sturm-bound proofs of the
+multiplier relations of degrees $3$, $5$, and $7$; and compute the class invariant
+$G_{121}$ numerically to 60 digits. The six proved cases suggest a uniform
+conjectural template for general prime $p$, driven by the Atkin--Lehner involution
+$w_4$ of $X_0(4p)$, with testable predictions for $p = 19$ and $p = 23$.
+The auxiliary quintic $r_{11}$ remains open, and
+we give a concrete attack plan for it.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+\label{sec:intro}
+
+At the end of Section 12 of Chapter 20 of his second notebook, Ramanujan wrote a
+marginal note (Berndt, \emph{Ramanujan's Notebooks, Part III}, p.~400) asserting that,
+for prime $n$, the theta functions $\varphi(q^{1/n})$, $\psi(q^{1/n})$ and
+$f(-q^{1/n})$ can be expressed as a sum of $\frac12(n-1)$ $n$th roots of several
+functions plus $\varphi(q^n)$, $\psi(q^n)$ or $f(-q^n)$, and that ``in finding the
+values of these functions, quadratics only appear in the case of the 5th, 17th,
+257th, etc.\ degrees, and cubics in case of the 7th, 13th, 19th, 37th, 73rd, 97th,
+109th, 163rd, 193rd etc.\ degrees \dots\ and quintics in case of the 11th, 41st,
+101st etc.\ degrees.'' Berndt writes: ``We are unable to provide a proper
+interpretation for most of this statement.''
+
+The three cases Ramanujan's note points to have now been proved in full:
+\begin{itemize}
+\item Degree $3$ (cubic): Berndt--Reb\'ak \cite{BR25}, Theorem 2.1.
+\item Degree $5$ (quintic): Berndt--Reb\'ak \cite{BR25}, Theorem 4.2.
+\item Degree $7$ (septic): Ramanujan's Lost Notebook, p.~206, Entry 1.1(i)--(v)
+proved by Son \cite{Son01}; part (vi), the three missing terms, completed by
+Reb\'ak \cite{Reb23}, Theorem 4.1.
+\item Degree $9$ (nonic, composite): Kim--Reb\'ak \cite{KR25}.
+\end{itemize}
+Berndt--Reb\'ak call these ``special cases of a grand theory that Ramanujan
+envisioned'' in the note, and warn that ``as the order increases, we know less and
+less about the modular equations necessary for a possible grand theory.'' No case
+for any prime $p \geq 11$ had been published before this work; we now prove the
+cases $p = 11$, $13$, and $17$.
+
+The prime lists in Ramanujan's note admit a clean arithmetic reading, which we
+record here since it shapes everything that follows: the lists are exactly the
+primes for which $(p-1)/2$ has prime factors only in $\{2\}$, $\{2,3\}$, $\{2,5\}$
+respectively. That is, they are the primes whose real cyclotomic field
+$\Q(\zeta_p)^+$, of degree $(p-1)/2$ with cyclic Galois group, can be built by
+successively adjoining roots of equations of degree $2$ only, $2$ and $3$, or $2$
+and $5$. The lists are complete for the stated bound: for example $p=23$ has
+$(p-1)/2 = 11$, needing 11th roots, and $p=29$ has $(p-1)/2 = 14 = 2\cdot 7$,
+needing 7th roots, so neither appears in any list.
+
+This paper has five contributions.
+\begin{enumerate}
+\item \textbf{The degree-$11$ modular equation} (Theorem~\ref{thm:p11}): the explicit
+relation $G(Y,P) = 0$ between $Y = \varphi^4(q)/\varphi^4(q^{11})$ and
+$P = \pprod/32$, proved by the Sturm-bound method on $\Gamma_0(44)$. This is the
+first case of Ramanujan's envisioned theory for a prime $p \geq 11$. The relation is
+a plane quintic of genus $2$ with small integer coefficients, whose pure parts are
+the perfect fifth powers $(1-Y)^5$ and $(1+32P)^5$.
+\item \textbf{The degree-$13$ and degree-$17$ modular equations}
+(Theorems~\ref{thm:p13} and~\ref{thm:p17}, \S\ref{sec:p1317}): the explicit relations
+$F(m,P) = 0$ for $p = 13$ (a plane septic of genus $2$, proved on $\Gamma_0(52)$)
+and $p = 17$ (a plane curve of degree $12$ and genus $3$, proved on $\Gamma_0(68)$),
+found and proved by the same method as Theorem~\ref{thm:p11}. In both cases the
+pure parts are perfect powers with exponents equal to the degrees, and the map
+$X_0(4p) \to C$ has degree $2$.
+\item \textbf{A general product formula} (Theorem~\ref{thm:pprod}): the product of
+the dissection terms is an explicit $\chi$-quotient for \emph{every} odd $n$,
+proved by an elementary argument from the Jacobi triple product. This unifies the
+three known cases and gives the $p=11$ product used in (1).
+\item \textbf{Computational verification} (\S\ref{sec:comp}): the dissection, the
+three flagship evaluations, and eleven class invariants verified to 50 digits; the
+class invariant $G_{121}$ computed numerically to 60 digits (no closed form is
+known).
+\item \textbf{Sturm-bound proofs} (\S\ref{sec:sturm}): the multiplier relations of
+degrees $3$, $5$, and $7$ proved by the modern route (Newman--Ligozat criteria plus
+a Sturm-bound coefficient check), with a new prover; and the $p=11$ frontier
+(\S\ref{sec:p11}): the auxiliary quintic $r_{11}$ remains open, and we give a
+concrete attack plan for it.
+\end{enumerate}
+
+\subsection{Notation}
+We use Ramanujan's notation throughout. For $|ab|<1$,
+\begin{equation}
+f(a,b) := \sum_{n=-\infty}^{\infty} a^{n(n+1)/2} b^{n(n-1)/2}
+= (-a;ab)_\infty(-b;ab)_\infty(ab;ab)_\infty,
+\end{equation}
+the Jacobi triple product. The three principal specialisations are
+\begin{equation}
+\varphi(q) := f(q,q) = \sum_{n=-\infty}^{\infty} q^{n^2}, \qquad
+\psi(q) := f(q,q^3) = \sum_{n=0}^{\infty} q^{n(n+1)/2}, \qquad
+\chi(q) := (-q;q^2)_\infty.
+\end{equation}
+For $q = e^{-\pi\sqrt{n}}$, $n>0$ rational, the class invariant is
+\begin{equation}
+G_n := 2^{-1/4} q^{-1/24}\chi(q), \qquad G_n = G_{1/n}.
+\end{equation}
+The multiplier of degree $d$ is $m := \varphi^2(q)/\varphi^2(q^d)$ and we write
+$Y := \varphi^4(q)/\varphi^4(q^p) = m^2$. Throughout, $0<q<1$ is real unless
+otherwise stated, and $n$ denotes an odd positive integer.
+
+\section{The dissection and the general product formula}
+\label{sec:pprod}
+
+The universal dissection (Entry 31, Chapter 16; Kim--Reb\'ak \cite{KR25}, Lemma 2.3)
+holds for every odd $n$:
+\begin{equation}
+\frac{\varphi(q^{1/n})}{\varphi(q^n)}
+= 1 + \sum_{k=1}^{(n-1)/2} \frac{2q^{k^2/n}\, f(q^{n+2k},\, q^{n-2k})}{\varphi(q^n)}.
+\label{eq:dissection}
+\end{equation}
+For prime $p$ we define the dissection terms
+\begin{equation}
+u_k := \frac{2q^{k^2/p}\, f(q^{p+2k},\, q^{p-2k})}{\varphi(q^p)},
+\qquad k = 1, \dots, \tfrac{p-1}{2},
+\label{eq:uk}
+\end{equation}
+so that $\varphi(q^{1/p})/\varphi(q^p) = 1 + \sum_k u_k$. For $0<q<1$ the $u_k$
+are positive and strictly decreasing in $k$ (Reb\'ak \cite{Reb23}, Lemma 3.2).
+We write $\pprod := \prod_k u_k$ for their product.
+
+The three proved cases give:
+\begin{center}
+\begin{tabular}{c|c|c}
+$p$ & $\pprod$ & in class invariants \\ \hline
+3 & $2q^{1/3}\chi(q)/\chi^3(q^3)$ & $\sqrt{2}\,G_n/G_{9n}^3$ \\
+5 & $4q\,\chi(q)/\chi^5(q^5)$ & $2\,G_n/G_{25n}^5$ \\
+7 & $8q^2\chi(q)/\chi^7(q^7)$ & $2\sqrt{2}\,G_n/G_{49n}^7$
+\end{tabular}
+\end{center}
+These fit a single formula, which we now prove for every odd $n$.
+
+\begin{theorem}[General product formula]
+\label{thm:pprod}
+Let $n$ be odd and $|q|<1$. With $u_k$ as in \eqref{eq:uk} (with $p$ replaced by
+$n$), the product of the dissection terms is
+\begin{equation}
+\prod_{k=1}^{(n-1)/2} u_k
+= 2^{(n-1)/2}\, q^{(n^2-1)/24}\, \frac{\chi(q)}{\chi^n(q^n)}.
+\label{eq:pprod-chi}
+\end{equation}
+In particular, for $q = e^{-\pi\sqrt{n}}$,
+\begin{equation}
+\pprod = 2^{(n-1)/4}\, \frac{G_n}{G_{n^2}^{\,n}}.
+\label{eq:pprod-G}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+By the Jacobi triple product,
+\begin{equation}
+f(q^{n+2k}, q^{n-2k})
+= (-q^{n+2k};q^{2n})_\infty\,(-q^{n-2k};q^{2n})_\infty\,(q^{2n};q^{2n})_\infty.
+\end{equation}
+As $k$ runs over $1, \dots, (n-1)/2$, the exponents $n+2k$ run over the odd residues
+$n+2, n+4, \dots, 2n-1$ modulo $2n$, and $n-2k$ run over the odd residues
+$1, 3, \dots, n-2$ modulo $2n$. Together they run over all odd residues modulo $2n$
+except $n$ itself. Hence
+\begin{equation}
+\prod_{k=1}^{(n-1)/2} (-q^{n+2k};q^{2n})_\infty\,(-q^{n-2k};q^{2n})_\infty
+= \prod_{\substack{r\ \mathrm{odd}\\ r \not\equiv n \pmod{2n}}} (1+q^r)
+= \frac{\chi(q)}{\chi(q^n)},
+\end{equation}
+since $\chi(q) = \prod_{m\geq 0}(1+q^{2m+1})$ is the product over all odd exponents
+and $\chi(q^n) = \prod_{m\geq 0}(1+q^{n(2m+1)})$ is the product over the odd multiples
+of $n$, which are exactly the exponents congruent to $n$ modulo $2n$ (as $n$ is odd).
+
+Therefore the numerator of $\prod_k u_k$ is
+\begin{equation}
+2^{(n-1)/2} q^{\sum k^2/n} \cdot \frac{\chi(q)}{\chi(q^n)}
+\cdot (q^{2n};q^{2n})_\infty^{(n-1)/2},
+\end{equation}
+with $\sum_{k=1}^{(n-1)/2} k^2 = (n-1)n(n+1)/24$, so $\sum k^2/n = (n^2-1)/24$.
+The denominator is $\varphi(q^n)^{(n-1)/2}$. By the triple product with $a=b=q^n$,
+\begin{equation}
+\varphi(q^n) = f(q^n,q^n) = (-q^n;q^{2n})_\infty^2\,(q^{2n};q^{2n})_\infty
+= \chi(q^n)^2\,(q^{2n};q^{2n})_\infty,
+\end{equation}
+so the denominator is $\chi(q^n)^{n-1}(q^{2n};q^{2n})_\infty^{(n-1)/2}$. The
+$(q^{2n};q^{2n})_\infty$ factors cancel, giving \eqref{eq:pprod-chi}.
+
+For \eqref{eq:pprod-G}, substitute $\chi(q) = 2^{1/4}q^{1/24}G_n$ and
+$\chi(q^n) = 2^{1/4}q^{n/24}G_{n^2}$:
+\begin{equation}
+\frac{\chi(q)}{\chi(q^n)^n}
+= 2^{(1-n)/4} q^{(1-n^2)/24} \frac{G_n}{G_{n^2}^{\,n}},
+\end{equation}
+and multiplying by $2^{(n-1)/2}q^{(n^2-1)/24}$ gives
+$2^{(n-1)/4}G_n/G_{n^2}^{\,n}$.
+\end{proof}
+
+\begin{corollary}
+For $p=11$,
+\begin{equation}
+\pprod = 32\,q^5\,\frac{\chi(q)}{\chi^{11}(q^{11})}
+= 4\sqrt{2}\,\frac{G_n}{G_{121n}^{11}}.
+\end{equation}
+At the flagship point $q = e^{-\pi/\sqrt{11}}$ this gives
+\begin{equation}
+\pprod = 4\sqrt{2}/G_{11}^{10} = 0.416439434275864095678569298496\dots.
+\end{equation}
+\end{corollary}
+
+\begin{remark}
+The $p=9$ (composite) case has a different shape: $u_1u_2u_4 =
+8q^{7/3}\chi(q)/[\chi^6(q^9)\chi(q^3)]$ (Kim--Reb\'ak \cite{KR25}, Lemma 2.5),
+because the middle term $u_3 = \varphi(q)/\varphi(q^9)-1$ is obtained separately
+and the remaining terms are cube roots, not 9th roots. Theorem~\ref{thm:pprod}
+applies to the product over all $(n-1)/2$ terms for odd $n$; for composite $n$ the
+individual $u_k$ are not all $n$th roots of a single auxiliary polynomial, so the
+product formula is a necessary but not sufficient ingredient for a composite-degree
+theory.
+\end{remark}
+
+\section{Computational verification}
+\label{sec:comp}
+
+All computations in this section were performed in Python 3 with \texttt{sympy} 1.12
+and \texttt{mpmath} 1.2.1, at 50 digits of precision unless otherwise stated. The
+scripts are available from the author. Exact $q$-series were computed with integer
+coefficients in the variable $t = q^{1/n}$, so all exponents are integers.
+
+\subsection{The dissection}
+
+We implemented the dissection \eqref{eq:dissection} in the variable $t = q^{1/n}$:
+\begin{equation}
+\frac{\varphi(t)}{\varphi(t^{n^2})}
+= 1 + \sum_{k=1}^{(n-1)/2} \frac{2t^{k^2}\, f(t^{n(n+2k)},\, t^{n(n-2k)})}{\varphi(t^{n^2})},
+\end{equation}
+with exact integer-coefficient series for $\varphi$, $f$, and $\chi$ (series division
+by inversion), plus high-precision numerics.
+
+\begin{proposition}
+For $n = 3, 5, 7, 9, 11, 13, 17$, the dissection holds exactly as a formal power
+series to order $t^{120}$ (exact integer arithmetic), and numerically to 50 digits
+with $|{\rm LHS} - {\rm RHS}| \leq 2\times 10^{-49}$ at $q = 0.3, 0.5, 0.7$.
+The product formula \eqref{eq:pprod-chi} holds exactly to order $t^{120}$ and
+numerically with relative error $\leq 6\times 10^{-50}$ for the same $n$.
+\end{proposition}
+
+\subsection{The three flagship evaluations}
+
+The flagship evaluations are the payoff of the theory: exact values at CM points
+where $\pprod$ and $Y$ become algebraic of low degree.
+\begin{align}
+\varphi(e^{-3\pi\sqrt{3}}) &= 3^{-3/4}\varphi(e^{-\pi\sqrt{3}})\{1+2^{1/3}\},
+\label{eq:flag3} \\
+\varphi(e^{-5\pi\sqrt{5}}) &= 5^{-3/4}\varphi(e^{-\pi\sqrt{5}})
+\left\{1+\left(\frac{2(1+\tan\frac{\pi}{5})}{1-\sin\frac{\pi}{5}}\right)^{1/5}
++\left(\frac{2(1-\tan\frac{\pi}{5})}{1+\sin\frac{\pi}{5}}\right)^{1/5}\right\},
+\label{eq:flag5} \\
+\varphi(e^{-7\pi\sqrt{7}}) &= 7^{-3/4}\varphi(e^{-\pi\sqrt{7}})
+\left\{1+\left(\frac{\cos\frac{\pi}{7}}{2\cos^2\frac{2\pi}{7}}\right)^{2/7}
++\left(\frac{\cos\frac{2\pi}{7}}{2\cos^2\frac{3\pi}{7}}\right)^{2/7}
++\left(\frac{\cos\frac{3\pi}{7}}{2\cos^2\frac{\pi}{7}}\right)^{2/7}\right\}.
+\label{eq:flag7}
+\end{align}
+
+\begin{proposition}
+The identities \eqref{eq:flag3}--\eqref{eq:flag7} hold numerically to 50 digits
+(relative errors $0$ to $3\times 10^{-51}$). Moreover, the machine reproduction at
+$q_1 = e^{-\pi/\sqrt{p}}$ confirms the internal structure of each theory:
+$\pprod$ computed from the $\chi$-quotient equals $\pprod$ computed from the
+$G$-formula; the multiplier relations hold; the auxiliary polynomials have exactly
+the published coefficients; the roots match the trigonometric forms; and the cyclic
+root ordering is as published.
+\end{proposition}
+
+In particular, for the septic case: $\pprod = 1$ (both routes, exact);
+$X = \varphi^4(q)/\varphi^4(q^7) = 7$; the modular-equation residual is
+$-2\times 10^{-49}$; $r(\xi) = \xi^3-6\xi^2+5\xi-1$ exactly; its roots match
+$1/(2\cos k\pi/7)^2$; the cyclic assignment $(\alpha,\beta,\gamma)$ = roots for
+$k=3,2,1$ gives $u = (\alpha^2\pprod/\beta)^{1/7}$ etc.\ matching the dissection's
+$u,v,w$; and Lemma 3.8 of \cite{Reb23} is confirmed:
+$\sum_i s_i^7 = 41.0$ (relative error $10^{-50}$), where $s_i$ are the published
+trigonometric terms. We note for the record that the published septic terms appear
+in the order $(v,u,w)$ relative to the dissection's $u,v,w$; the sum is unaffected.
+
+For the quintic case: $\pprod = \sqrt{5}-1$ (both routes); $\varphi^2(q)/\varphi^2(q^5)
+= \sqrt{5} = 1+\pprod$; the auxiliary quadratic $\xi^2-((\pprod-1)^2+7)\xi+\pprod^3=0$
+has roots $\alpha \approx 6.7770610073$, $\beta \approx 0.2786670827$; and
+$(\alpha\pprod)^{1/5}$, $(\beta\pprod)^{1/5}$ reproduce the two published
+$\tan/\sin$ terms exactly.
+
+\subsection{Class invariants}
+
+We verified eleven class invariants against the definition
+\begin{equation}
+G_n = 2^{-1/4}q^{-1/24}\chi(q), \qquad q = e^{-\pi\sqrt{n}},
+\end{equation}
+to 50 digits:
+
+\begin{center}
+\small
+\begin{tabular}{c|l|c}
+$n$ & closed form & relative error \\ \hline
+3 & $2^{1/12}$ & $3\times 10^{-51}$ \\
+5 & $((1+\sqrt5)/2)^{1/4}$ & $2\times 10^{-51}$ \\
+7 & $2^{1/4}$ & $0$ \\
+11 & $[(3\sqrt{33}+17)^{1/3}-(3\sqrt{33}-17)^{1/3}+2]/(3\cdot 2^{1/4})$ & $0$ \\
+25 & $(\sqrt5+1)/2$ & $7\times 10^{-51}$ \\
+27 & $2^{1/12}(2^{1/3}-1)^{-1/3}$ & $3\times 10^{-51}$ \\
+99 & $G_{99}^3 = \frac{2^{1/4}}{3}[(7822+1362\sqrt{33})^{1/3}$ & $2\times 10^{-51}$ \\
+   & $\qquad +(7957+1383\sqrt{33})^{1/3}+2\sqrt{33}+13]$ & \\
+729 & $G_{729}^3 = \frac{\sqrt2}{2}R^{1/3}
+\left(\frac{3(\sqrt3+1)}{\sqrt3+1-R^{1/3}}-2\right)$ & $2\times 10^{-49}$ \\
+   & $R = \frac{(2(\sqrt3+1))^{1/3}+1}{(2(\sqrt3-1))^{1/3}-1}$ & \\
+125 & Berndt--Reb\'ak \cite{BR25}, Cor.~5.18 & $6\times 10^{-51}$ \\
+625 & Berndt--Reb\'ak \cite{BR25}, Cor.~5.19 & $6\times 10^{-51}$ \\
+243 & Watson: $2^{1/12}(2^{1/3}+2^{2/3}+3^{1/3})/(9-2\cdot 3^{4/3})^{1/3}$
+& $2\times 10^{-51}$
+\end{tabular}
+\end{center}
+
+Reciprocity $G_{1/n} = G_n$ was confirmed for $n=3,5,7,11$ (relative error
+$\leq 7\times 10^{-51}$).
+
+\begin{proposition}
+The class invariant $G_{121}$ has the numerical value
+\begin{equation}
+G_{121} = 3.54880113413074478010727440546246876515786749179993826540053\dots
+\end{equation}
+to 60 digits. No closed form for $G_{121}$ is known in the literature. An integer-relation
+search (PSLQ) found no minimal polynomial for $G_{121}$ (or $G_{121}^2$, $G_{121}^4$)
+of degree $\leq 8$ at 80 digits.
+\end{proposition}
+
+\section{Sturm-bound proofs of the multiplier relations}
+\label{sec:sturm}
+
+The multiplier relations are the heart of each theory: they relate
+$\varphi(q)/\varphi(q^p)$ to $\pprod$ and are what make the auxiliary polynomial
+solvable. We prove them by the modern route: write every term as an eta-quotient,
+verify modularity (Newman congruences, character, holomorphicity at all cusps via
+Ligozat's formula), and check the $q$-expansion to the Sturm bound.
+
+We use $\varphi(q) = \eta(2z)^5/(\eta(z)^2\eta(4z)^2)$ and
+$\chi(q) = q^{1/24}\eta(2z)^2/(\eta(z)\eta(4z))$, where $\eta$ is the Dedekind eta
+function and $q = e^{2\pi i z}$. For an eta-quotient $\prod_d \eta(dz)^{e_d}$ of
+level $N$, the Newman congruences are $\sum_d d\,e_d \equiv 0$ and
+$\sum_d (N/d)e_d \equiv 0 \pmod{24}$; the character is determined by
+$D_{\rm eff} = (-1)^k\prod_d d^{e_d}$ (two terms share a character iff the ratio of
+their $D_{\rm eff}$'s is a square in $\Q$); and the order at the cusp $1/c$ is given
+by Ligozat's formula
+$\operatorname{ord}_{1/c} = \frac{N}{24\gcd(c^2,N)}\sum_d e_d\gcd(c,d)^2/d$.
+The Sturm bound is $B = \lceil k[\mathrm{SL}_2(\Z):\Gamma_0(N)]/12\rceil$ for weight $k$.
+
+\begin{theorem}
+The multiplier relations of degrees $3$, $5$, and $7$ hold as identities of modular
+forms, proved by the Sturm-bound method:
+\begin{center}
+\begin{tabular}{c|c|c|c|c}
+$p$ & identity & level & weight & Sturm bound \\ \hline
+3 & $\varphi^4(q) - \varphi^4(q^3) - \pprod^3\varphi^4(q^3) = 0$ & $\Gamma_0(12)$ & 2 & 4 \\
+5 & $\varphi^2(q) - \varphi^2(q^5) - \pprod\,\varphi^2(q^5) = 0$ & $\Gamma_0(20)$ & 1 & 3 \\
+7 & $\varphi^8(q) - (2+5\pprod)\varphi^4(q)\varphi^4(q^7)
++ (1-\pprod)^3\varphi^8(q^7) = 0$ & $\Gamma_0(28)$ & 4 & 16
+\end{tabular}
+\end{center}
+In each case all terms have the same weight and character (trivial for $p=3,7$;
+$\chi_{-4}$ for all three $p=5$ terms), are holomorphic at every cusp, and the
+$q$-expansion of the sum vanishes to order $q^{60}$, well beyond the Sturm bound.
+\end{theorem}
+
+\begin{proof}[Sketch of the verification]
+For each identity we expand every term as an eta-quotient and check the Newman
+congruences, the character (via $D_{\rm eff}$), and holomorphicity at every cusp
+$1/c$, $c \mid N$, by Ligozat's formula. The $p=7$ identity expands to seven
+eta-quotient terms after clearing $(1-\pprod)^3$ and $(2+5\pprod)$; all seven have
+weight $4$, trivial character, and non-negative cusp orders. The $q$-expansion of
+each sum is then verified to vanish through the Sturm bound (and in fact to $q^{60}$)
+by exact integer arithmetic. The full eta-quotient data and the verification script
+are available from the author.
+\end{proof}
+
+\begin{remark}
+The degree-$11$ Schr\"oter equation (Berndt, Part III, Entry 7(i)),
+$(\alpha\beta)^{1/4} + ((1-\alpha)(1-\beta))^{1/4}
++ 2(16\alpha\beta(1-\alpha)(1-\beta))^{1/12} = 1$ with
+$\alpha = \lambda(\tau)$, $\beta = \lambda(11\tau)$, was verified numerically to
+50 digits at $\tau = i, 0.5i, 2i, 0.3i$ ($|\mathrm{LHS}-1| \leq 2\times 10^{-47}$).
+A full Sturm-bound proof was not carried out: the equation lives on
+$\Gamma(2)\cap\Gamma_0(11)$, involves 4th and 12th roots, and clearing them to a
+polynomial in $(\alpha,\beta)$ needs a resultant elimination that the present
+eta-quotient machinery (integer-$d$ eta-quotients on $\Gamma_0(N)$ only) does not
+support. Extending the prover to $\Gamma(2)$ is left for future work.
+\end{remark}
+
+\section{The degree-eleven modular equation}
+\label{sec:p11eq}
+
+We now prove the degree-$11$ modular equation: the explicit algebraic relation
+between the multiplier $m = \varphi^2(q)/\varphi^2(q^{11})$ and the product
+$\pprod = 32q^5\chi(q)/\chi^{11}(q^{11})$ (Theorem~\ref{thm:pprod} with $n=11$).
+Only even powers of $m$ occur, so the relation is really in
+$Y = m^2 = \varphi^4(q)/\varphi^4(q^{11})$, the exact analogue of the $p=7$
+variable $X = \varphi^4(q)/\varphi^4(q^7)$. We write $P = \pprod/32$.
+
+\begin{theorem}[The degree-$11$ modular equation]
+\label{thm:p11}
+Let $Y = \varphi^4(q)/\varphi^4(q^{11})$ and $P = \pprod/32$, where
+$\pprod = 32q^5\chi(q)/\chi^{11}(q^{11})$. Then $G(Y,P) = 0$, where
+\begin{align}
+G(Y,P) ={}& -Y^5 + 5Y^4 - 10Y^3 + 10Y^2 - 5Y + 1 \nonumber \\
+&+ P\,(160Y^4 + 2432Y^3 + 19392Y^2 + 10624Y + 160) \nonumber \\
+&+ P^2\,(-10240Y^3 - 55296Y^2 - 796672Y + 10240) \nonumber \\
+&+ P^3\,(327680Y^2 + 6914048Y + 327680) \nonumber \\
+&+ P^4\,(-5242880Y + 5242880) + 33554432\,P^5.
+\label{eq:G}
+\end{align}
+Equivalently, in the variables $(m,\pprod)$,
+\begin{align}
+F(m,\pprod) ={}& -m^{10} + 5m^8\pprod + 5m^8 - 10m^6\pprod^2 + 76m^6\pprod - 10m^6 \nonumber \\
+&+ 10m^4\pprod^3 - 54m^4\pprod^2 + 606m^4\pprod + 10m^4 \nonumber \\
+&- 5m^2\pprod^4 + 211m^2\pprod^3 - 778m^2\pprod^2 + 332m^2\pprod - 5m^2 \nonumber \\
+&+ \pprod^5 + 5\pprod^4 + 10\pprod^3 + 10\pprod^2 + 5\pprod + 1 = 0.
+\label{eq:F}
+\end{align}
+\end{theorem}
+
+The relation has a striking structure. Writing out the pure parts,
+\begin{equation}
+G(Y,P) = (1-Y)^5 + (1+32P)^5 - 1 + P\cdot Y\cdot S(Y,P),
+\label{eq:Gstruct}
+\end{equation}
+where $S$ is an explicit cubic, namely
+\begin{align}
+S(Y,P) = -32\,\big(&163840P^3 - 10240P^2Y - 216064P^2 + 320PY^2 + 1728PY \nonumber \\
+&+ 24896P - 5Y^3 - 76Y^2 - 606Y - 332\big).
+\end{align}
+The $P$-only part is $(1+32P)^5 = (1+\pprod)^5$ (coefficients $1, 160, 10240,
+327680, 5242880, 33554432 = \binom{5}{k}2^{5k}$) and the $Y$-only part is
+$(1-Y)^5$. Only monomials $Y^iP^j$ with $i+j \leq 5$ occur, and $G$ is irreducible
+over $\Q$.
+
+\subsection{Where $m$ and $\pprod$ live}
+
+Both $m$ and $\pprod$ are eta-quotients on $\Gamma_0(44)$ --- level $4\cdot 11$,
+exactly as in the $p=7$ case (level $28$), \emph{not} level $11$:
+\begin{align}
+m &= \eta(z)^{-4}\eta(2z)^{10}\eta(4z)^{-4}\eta(11z)^4\eta(22z)^{-10}\eta(44z)^4, \\
+\pprod &= 32\cdot\eta(z)^{-1}\eta(2z)^2\eta(4z)^{-1}\eta(11z)^{11}\eta(22z)^{-22}\eta(44z)^{11}.
+\end{align}
+The eta-quotient for $\pprod$ itself has $q$-order $5$ at $\infty$, so
+$\pprod = 32q^5\cdot(\text{unit})$, as in Theorem~\ref{thm:pprod}.
+Both satisfy the Newman congruences at level $44$ with trivial character
+($D_{\rm eff}(m) = 1/121$ and $D_{\rm eff}(\pprod) = 1$, both squares), so
+$m, \pprod \in \C(X_0(44))$. Their Ligozat cusp orders on $\Gamma_0(44)$ are:
+\begin{center}
+\begin{tabular}{c|c|c}
+cusp & $\operatorname{ord}(m)$ & $\operatorname{ord}(\pprod)$ \\ \hline
+$\infty$ & $0$ (value $1$) & $5$ (zero) \\
+$0$ & $0$ (value $11$) & $0$ (value $32$) \\
+$1/2$ & $5$ (zero) & $0$ \\
+$1/4$ & $0$ & $0$ \\
+$1/11$ & $0$ & $5$ (zero) \\
+$1/22$ & $-5$ (pole) & $-10$ (pole)
+\end{tabular}
+\end{center}
+Hence $\deg(m) = 5$, $\deg(\pprod) = 10$, and both functions have their only pole
+at the cusp $1/22$. The degree bounds for the minimal relation are therefore
+$\deg_m F \leq 10$ and $\deg_{\pprod} F \leq 5$. The cusp values check out:
+$F(1,0) = 0$ and $F(11,32) = 0$, equivalently $G(1,0) = G(121,1) = 0$.
+
+\subsection{How the relation was found}
+
+Exact integer $q$-series for $m$ and $P = \pprod/32$ were computed to $q^{400}$.
+Monomials $m^iP^j$ were built by convolution modulo the prime $999983$ (float64 is
+exact here: partial sums $< 6\cdot 10^{14} < 2^{53}$), and the nullspace was computed
+over increasing monomial boxes $(I,J)$. No relation exists for any box below
+$(10,5)$; at $(10,5)$ (66 monomials, 106 rows) the nullspace is one-dimensional,
+supported only on even powers of $m$ with the triangular pattern $Y^iP^j$,
+$i+j \leq 5$, and $P^5$-coefficient $1$. Exact rational nullspace computation on the
+21 triangle monomials then gives the unique primitive integer vector --- the
+coefficients in \eqref{eq:G} (largest $33554432 = 2^{25}$; all coefficients are
+small). No PSLQ or LLL was needed: exact linear algebra sufficed.
+
+\subsection{Proof by the Sturm bound}
+
+\begin{proof}[Proof of Theorem~\ref{thm:p11}]
+On $\Gamma_0(44)$, the index is $\mu = [\mathrm{SL}_2(\Z):\Gamma_0(44)] = 72$.
+Let $K = \eta(2z)^2\eta(22z)^2$ (weight $2$, trivial character). Then $K^{25}$ has
+weight $50$ and $\operatorname{ord}_{1/22}(K^{25}) = 50$, while $Y^iP^j$ has its
+only pole at $1/22$, of order $10(i+j) \leq 50$. Hence every term
+$K^{25}Y^iP^j$ (21 terms) is a holomorphic modular form of weight $50$, trivial
+character, on $\Gamma_0(44)$ --- each term's Newman congruences, $D_{\rm eff}$
+square, and Ligozat orders $\geq 0$ at every cusp were checked symbolically.
+The Sturm bound is $\lceil 50\cdot 72/12\rceil = 300$. The $q$-expansion of
+$K^{25}G(Y,P)$, computed in exact integer arithmetic, has all coefficients
+$q^0,\dots,q^{300}$ equal to zero (in fact no nonzero coefficient to $q^{400}$).
+Therefore $K^{25}G(Y,P) \equiv 0$ as a modular form, and since $K \not\equiv 0$,
+$G(Y,P) = 0$ identically. This is a complete proof in the same style as the
+proofs in \S\ref{sec:sturm}.
+\end{proof}
+
+The relation was also verified independently: as a formal power series
+$G(Y,P) = 0$ to $q^{600}$ in exact integer arithmetic, and numerically to 50
+digits with relative error $\leq 7\times 10^{-50}$ at eight real $q \in
+[0.2, 0.85]$, at the flagship $q_1 = e^{-\pi/\sqrt{11}}$ (where $m = \sqrt{11}$
+and $\pprod = 4\sqrt{2}/G_{11}^{10} = 0.41643943427586409568\dots$), and at three
+complex $q$.
+
+\subsection{The curve $G(Y,P) = 0$ has genus $2$}
+
+The curve is irreducible over $\Q$ and is a plane quintic. Its degree-$5$
+homogeneous part is $-(Y-32P)^5$, so the projective curve meets the line at
+infinity only at $[32:1:0]$, which is smooth (the line at infinity is tangent
+with contact order $5$). It has exactly four singular points in the affine plane,
+all ordinary double points (nodes, $\delta = 1$ each), whose $Y$-coordinates are
+the four roots of $59049Y^4 + 280422Y^3 + 293768Y^2 - 64614Y - 14641$
+($59049 = 3^{10}$, $14641 = 11^4$). Hence the genus is
+$(5-1)(5-2)/2 - \sum\delta = 6 - 4 = 2$.
+
+\begin{remark}
+This corrects an expectation in earlier work on this problem, which predicted a
+genus-$1$ (elliptic) relation on the grounds that $X_0(11)$ has genus $1$. The
+functions $m$ and $\pprod$ actually live on $X_0(44)$, not $X_0(11)$, and their
+image curve has genus $2$. The map $X_0(44) \to C$ has degree $2$ (the tower
+$[\C(X_0(44)):\Q(P)] = 10$, $[\Q(Y,P):\Q(P)] = 5$), and Riemann--Hurwitz is
+consistent: $g(X_0(44)) = 4$, $g(C) = 2$, so $2\cdot 4 - 2 = 2(2\cdot 2 - 2) + R$
+gives $R = 2$ ramification points. The degree-$2$ map is the Atkin--Lehner
+quotient by $w_4$: the genuine involution $w_4$ of $X_0(44)$ fixes both $Y$ and
+$P$ (verified numerically to 40 digits), so $C \cong X_0(44)/w_4$ and the field
+extension is $\Q(m,P)/\Q(Y,P)$ with Galois involution $m \mapsto -m$. The
+involution $w_{11}$ (equivalently $w_{44}$) sends $Y \mapsto 121/Y$ and preserves
+the curve, but no simple closed form for its action on $P$ was found.
+\end{remark}
+
+\section{The degree-thirteen and degree-seventeen modular equations}
+\label{sec:p1317}
+
+The method of \S\ref{sec:p11eq} works prime by prime: for $p = 13$ and $p = 17$
+the functions $m$ and $\pprod$ are again eta-quotients on $\Gamma_0(4p)$ with
+trivial character and a single pole at the cusp $1/(2p)$, so the same search
+(mod-prime nullspace on $q$-expansions) and the same proof (Sturm bound after
+clearing the pole with a power of $K = \eta(2z)^2\eta(2pz)^2$) apply. The two
+new cases differ from $p = 11$ in one respect: odd powers of $m$ occur, so the
+relations are in $(m,P)$, not in $(Y,P)$.
+
+\subsection{Degree $13$}
+
+Here $\pprod = 64q^7\chi(q)/\chi^{13}(q^{13})$ (Theorem~\ref{thm:pprod} with
+$n = 13$) and $P = \pprod/64$. The eta-quotients on $\Gamma_0(52)$ are
+\begin{align}
+m &= \eta(z)^{-4}\eta(2z)^{10}\eta(4z)^{-4}\eta(13z)^4\eta(26z)^{-10}\eta(52z)^4, \\
+\pprod &= 64\cdot\eta(z)^{-1}\eta(2z)^2\eta(4z)^{-1}\eta(13z)^{13}
+\eta(26z)^{-26}\eta(52z)^{13}.
+\end{align}
+The eta-quotient for $\pprod$ itself has $q$-order $7$ at $\infty$, so
+$\pprod = 64q^7\cdot(\text{unit})$, as in Theorem~\ref{thm:pprod}.
+Both satisfy the Newman congruences at level $52$ with trivial character
+($D_{\rm eff}(m) = 1/169$ and $D_{\rm eff}(P) = 1$, both squares). Their
+Ligozat cusp orders are: $m$ has order $6$ at $1/2$, $-6$ at $1/26$, and $0$
+elsewhere; $P$ has order $7$ at $\infty$ and $1/13$, $-14$ at $1/26$,
+and $0$ elsewhere. (The cusp $1/52$ is $\Gamma_0(52)$-equivalent to $\infty$.)
+Hence $\deg(m) = 6$, $\deg(P) = 14$, and both have their
+only pole at $1/26$.
+
+\begin{theorem}[The degree-$13$ modular equation]
+\label{thm:p13}
+Let $m = \varphi^2(q)/\varphi^2(q^{13})$ and $P = \pprod/64$, where
+$\pprod = 64q^7\chi(q)/\chi^{13}(q^{13})$. Then $F(m,P) = 0$, where
+\begin{align}
+F(m,P) ={}& 262144P^3 + 45056P^2m^2 - 188416P^2m + 12288P^2 \nonumber \\
+&+ 1216Pm^4 - 2816Pm^3 + 10368Pm^2 + 7424Pm + 192P \nonumber \\
+&- m^7 + 7m^6 - 21m^5 + 35m^4 - 35m^3 + 21m^2 - 7m + 1.
+\label{eq:F13}
+\end{align}
+The pure parts are $F(m,0) = -(m-1)^7$ and $F(0,P) = (1+64P)^3$, and
+\begin{equation}
+F = (1+64P)^3 - (m-1)^7 - 1
++ 64\cdot P\cdot m\cdot(704Pm - 2944P + 19m^3 - 44m^2 + 162m + 116).
+\label{eq:F13struct}
+\end{equation}
+$F$ is irreducible over $\Q$.
+\end{theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:p13}]
+The relation first appears at the monomial box $(7,4)$: no relation exists
+for any smaller box, and at $(7,4)$ the nullspace is two-dimensional (the
+relation and its multiple by $P$), supported on 17 monomials
+($m^0,\dots,m^7$; $m^0,\dots,m^4$ times $P$; $m^0,m^1,m^2$ times $P^2$;
+$P^3$). Exact rational nullspace computation gives the unique primitive
+integer vector --- the coefficients in \eqref{eq:F13}.
+
+For the proof, $[\mathrm{SL}_2(\Z):\Gamma_0(52)] = 84$. Let
+$K = \eta(2z)^2\eta(26z)^2$ (weight $2$, trivial character); $K$ has order
+$7/3$ at every cusp. Then $K^{18}$ has weight $36$ and
+$\operatorname{ord}_{1/26}(K^{18}) = 42$, equal to the maximum pole order of
+$m^iP^j$ over the support. Hence every term $K^{18}m^iP^j$ (17 terms) is a
+holomorphic modular form of weight $36$, trivial character, on $\Gamma_0(52)$
+--- each term's Newman congruences, $D_{\rm eff}$ square, and Ligozat orders
+$\geq 0$ at every cusp were checked symbolically. The Sturm bound is
+$\lceil 36\cdot 84/12\rceil = 252$. The $q$-expansion of $K^{18}F(m,P)$,
+computed in exact integer arithmetic, has all coefficients $q^0,\dots,q^{252}$
+equal to zero (in fact no nonzero coefficient to $q^{400}$). Therefore
+$K^{18}F(m,P) \equiv 0$ as a modular form, and since $K \not\equiv 0$,
+$F(m,P) = 0$ identically.
+\end{proof}
+
+The relation was also verified independently: as a formal power series
+$F(m,P) = 0$ to $q^{600}$ in exact integer arithmetic, and numerically to 50
+digits with relative error $\sim 10^{-51}$ at seven points, including the
+flagship $q_1 = e^{-\pi/\sqrt{13}}$ (where $m = \sqrt{13}$ and
+$P = 0.0034695471649933081995\dots$). The cusp values check out:
+$F(1,0) = 0$ and $F(13,1) = 0$.
+
+The curve $F(m,P) = 0$ is a plane septic of arithmetic genus $15$. It has one
+point at infinity, unibranch with Puiseux pair $(4,7)$ and $\delta = 9$, and
+exactly four affine nodes ($\delta = 1$ each) at $(1,1/4)$,
+$(33.54542973059973, -93.17083713060966)$,
+$(-2.382790973655804, -0.086883662251872)$, and
+$(-0.162638756943925, 0.007720792861530)$. Hence its genus is $15 - 9 - 4 = 2$,
+confirmed by Riemann--Hurwitz on $m$ ($R = 8$: $2$ at $m = 0$, $4$ at the four
+simple ramification points, $2$ at $m = \infty$; the nodes contribute $0$) and
+by the degree-$2$ map $X_0(52) \to C$ ($g(X_0(52)) = 5$, $R' = 4$). The fibre
+over $m = 0$ is the single point $(0,-1/64)$, smooth, with $e = 3$
+($F_m(0,-1/64) = -169 = -13^2 \ne 0$).
+
+\subsection{Degree $17$}
+
+Here $\pprod = 256q^{12}\chi(q)/\chi^{17}(q^{17})$ (Theorem~\ref{thm:pprod}
+with $n = 17$) and $P = \pprod/256$. The eta-quotients on $\Gamma_0(68)$ are
+\begin{align}
+m &= \eta(z)^{-4}\eta(2z)^{10}\eta(4z)^{-4}\eta(17z)^4\eta(34z)^{-10}\eta(68z)^4, \\
+\pprod &= 256\cdot\eta(z)^{-1}\eta(2z)^2\eta(4z)^{-1}\eta(17z)^{17}
+\eta(34z)^{-34}\eta(68z)^{17}.
+\end{align}
+The eta-quotient for $\pprod$ itself has $q$-order $12$ at $\infty$, so
+$\pprod = 256q^{12}\cdot(\text{unit})$, as in Theorem~\ref{thm:pprod}.
+Both satisfy the Newman congruences at level $68$ with trivial character
+($D_{\rm eff}(m) = 1/289$ and $D_{\rm eff}(P) = 1$, both squares). Their
+Ligozat cusp orders are: $m$ has order $8$ at $1/2$, $-8$ at $1/34$, and $0$
+elsewhere; $P$ has order $12$ at $\infty$ and $1/17$, $-24$ at $1/34$,
+and $0$ elsewhere. (The cusp $1/68$ is $\Gamma_0(68)$-equivalent to $\infty$.)
+Hence $\deg(m) = 8$, $\deg(P) = 24$, and both have their
+only pole at $1/34$.
+
+\begin{theorem}[The degree-$17$ modular equation]
+\label{thm:p17}
+Let $m = \varphi^2(q)/\varphi^2(q^{17})$ and $P = \pprod/256$, where
+$\pprod = 256q^{12}\chi(q)/\chi^{17}(q^{17})$. Then $F(m,P) = 0$, where
+$F$ has the $35$ monomials with $i + 3j \leq 12$:
+\begin{align}
+F(m,P) ={}& \phantom{+} m^{12} - 12m^{11} + 66m^{10} - 220m^9 + 495m^8
+- 792m^7 + 924m^6 - 792m^5 + 495m^4 \nonumber \\
+&- 220m^3 + 66m^2 - 12m + 1 \nonumber \\
+&+ P\,(-1024 - 391168m - 5329920m^2 - 10408960m^3 + 5120m^4 + 19456m^5
+\nonumber \\
+&\qquad - 744448m^6 + 99328m^7 - 24576m^8 - 1024m^9) \nonumber \\
+&+ P^2\,(393216 - 195100672m + 919994368m^2 - 192806912m^3
++ 107347968m^4 \nonumber \\
+&\qquad - 19464192m^5 + 393216m^6) \nonumber \\
+&+ P^3\,(-67108864 - 6643777536m - 3690987520m^2 - 67108864m^3)
++ 4294967296P^4.
+\label{eq:F17}
+\end{align}
+The pure parts are $F(m,0) = (m-1)^{12}$ and $F(0,P) = (256P-1)^4$, and
+\begin{equation}
+F = (m-1)^{12} + (256P-1)^4 - 1 - 1024\cdot P\cdot m\cdot S(m,P),
+\label{eq:F17struct}
+\end{equation}
+where $S$ is explicit:
+\begin{align}
+S(m,P) ={}& 65536P^2m^2 + 3604480P^2m + 6488064P^2
+- 384Pm^5 + 19008Pm^4 - 104832Pm^3 \nonumber \\
+&+ 188288Pm^2 - 898432Pm + 190528P \nonumber \\
+&+ m^8 + 24m^7 - 97m^6 + 727m^5 - 19m^4 - 5m^3 + 10165m^2 + 5205m + 382.
+\end{align}
+$F$ is irreducible over $\Q$.
+\end{theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:p17}]
+The relation first appears at the monomial box $(12,4)$: no relation exists
+for any smaller box, and at $(12,4)$ the nullspace is one-dimensional,
+supported on the $35$ monomials with $i + 3j \leq 12$. Exact rational
+nullspace computation gives the unique primitive integer vector --- the
+coefficients in \eqref{eq:F17}.
+
+For the proof, $[\mathrm{SL}_2(\Z):\Gamma_0(68)] = 108$. Let
+$K = \eta(2z)^2\eta(34z)^2$ (weight $2$, trivial character); $K$ has order $3$
+at every cusp. Then $K^{32}$ has weight $64$ and
+$\operatorname{ord}_{1/34}(K^{32}) = 96$, equal to the maximum pole order of
+$m^iP^j$ over the support (attained uniformly on the triangle boundary
+$i + 3j = 12$). Hence every term $K^{32}m^iP^j$ (35 terms) is a holomorphic
+modular form of weight $64$, trivial character, on $\Gamma_0(68)$ --- each
+term's Newman congruences, $D_{\rm eff}$ square, and Ligozat orders $\geq 0$
+at every cusp were checked symbolically. The Sturm bound is
+$\lceil 64\cdot 108/12\rceil = 576$. The $q$-expansion of $K^{32}F(m,P)$,
+computed in exact integer arithmetic, has all coefficients $q^0,\dots,q^{576}$
+equal to zero (in fact no nonzero coefficient to $q^{800}$). Therefore
+$K^{32}F(m,P) \equiv 0$ as a modular form, and since $K \not\equiv 0$,
+$F(m,P) = 0$ identically.
+\end{proof}
+
+The relation was also verified independently: as a formal power series
+$F(m,P) = 0$ to $q^{600}$ in exact integer arithmetic, and numerically to 50
+digits with relative error $\sim 10^{-51}$ at seven points, including the
+flagship $q_1 = e^{-\pi/\sqrt{17}}$ (where $m = \sqrt{17}$ and
+$P = 0.00017769354832319060602\dots$). The cusp values check out:
+$F(1,0) = 0$ and $F(17,1) = 0$.
+
+The curve $F(m,P) = 0$ is a plane curve of degree $12$ and arithmetic genus
+$55$. It has one point at infinity, unibranch, with multiplicity sequence
+$8, 4, 4$ under iterated blow-up, so $\delta = 28 + 6 + 6 = 40$ there. It has
+exactly twelve affine nodes ($\delta = 1$ each); their $m$-coordinates are the
+twelve roots of
+\begin{align}
+&15625m^{12} + 57350m^{11} + 435636m^{10} + 4017474m^9 - 7136763m^8
++ 58172316m^7 \nonumber \\
+&\qquad - 2075760m^6 + 39725924m^5 + 142214563m^4
++ 63554366m^3 + 7265596m^2 - 57222m - 4913,
+\end{align}
+each verified a node by a nonzero tangent-cone discriminant
+$F_{mm}F_{PP} - F_{mP}^2$ at 80 digits. Hence its genus is $55 - 40 - 12 = 3$,
+confirmed by Riemann--Hurwitz on $m$ ($R = 12$: $3$ at $m = 0$, $6$ at the six
+simple ramification points, $3$ at $m = \infty$; the nodes contribute $0$) and
+by the degree-$2$ map $X_0(68) \to C$ ($g(X_0(68)) = 7$, $R' = 4$). The fibre
+over $m = 0$ is the single point $(0,1/256)$, smooth, with $e = 4$.
+
+\begin{remark}
+Ramanujan already recorded degree-$17$ modular equations (Notebook 2,
+Entry 12) --- but in the classical $(\alpha,\beta)$ variables, not in the
+theta variables $(m,\pprod)$. Theorem~\ref{thm:p17} is the first degree-$17$
+equation in Ramanujan's theta variables. Note also that $17$ is in Ramanujan's
+``quadratics only'' list, since $(17-1)/2 = 8 = 2^3$, while $13$ is in his
+``cubics'' list; the auxiliary polynomials $r_{13}$ and $r_{17}$ (degrees $6$
+and $8$) remain open, exactly as $r_{11}$ is open.
+\end{remark}
+
+\subsection{The emerging pattern, and its limits}
+
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c|c}
+$p$ & level & index & relation & support & weight & Sturm bound & genus \\ \hline
+11 & 44 & 72 & $G(Y,P)$, deg $5$ & $i+j \leq 5$ (21 mon.) & 50 & 300 & 2 \\
+13 & 52 & 84 & $F(m,P)$, deg $7$ & 17 mon. & 36 & 252 & 2 \\
+17 & 68 & 108 & $F(m,P)$, deg $12$ & $i+3j \leq 12$ (35 mon.) & 64 & 576 & 3
+\end{tabular}
+\end{center}
+
+The common features are real: the pure parts are perfect powers with exponents
+equal to the degrees ($\deg_m F$ and $\deg_P F$); the mixed remainder is
+divisible by $P\cdot m$; and the map $X_0(4p) \to C$ has degree $2$ in all three
+cases. But a uniform theorem for all primes $p$ is not established: the relation
+is in $(m,P)$ for $p = 13, 17$ but in $(Y,P) = (m^2,P)$ for $p = 11$, with no
+proved rule for when odd powers of $m$ appear; the support pattern differs in
+each case; and the genus sequence $2, 2, 3$ has no proved formula. The method is
+effective prime by prime --- the Sturm bound and the linear algebra grow with
+$p$, but both scaled comfortably (seconds) at $p = 17$ --- and the next cases
+are $p = 19$ (level $76$) and $p = 23$ (level $92$).
+
+\section{A conjectural template for general prime $p$}
+\label{sec:conjecture}
+
+The six proved cases $p = 3, 5, 7, 11, 13, 17$ suggest a uniform template for
+the degree-$p$ modular equation. We state it here precisely, and we label each
+part honestly: \emph{[Theorem]} for what is proved in general, \emph{[Verified]}
+for what has been checked numerically but not proved, \emph{[Pattern]} for what
+holds in all cases where it can be checked but has no proof and no known
+mechanism, and \emph{[Guess]} for extrapolation with thin evidence. Nothing
+labelled [Pattern] or [Guess] is presented as a theorem. The prime $p = 3$ is
+degenerate in every formula below (since $(p^2-1)/24$ is not an integer there)
+and is excluded from the general statements.
+
+Let $p \geq 5$ be prime, and write $m = \varphi^2(q)/\varphi^2(q^p)$ and
+$P = \pprod/2^{(p-1)/2}$, where $\pprod$ is as in Theorem~\ref{thm:pprod}.
+Both are eta-quotients on $\Gamma_0(4p)$:
+\begin{align}
+m &= \eta(z)^{-4}\eta(2z)^{10}\eta(4z)^{-4}\eta(pz)^4\eta(2pz)^{-10}\eta(4pz)^4, \\
+P &= \eta(z)^{-1}\eta(2z)^2\eta(4z)^{-1}\eta(pz)^p\eta(2pz)^{-2p}\eta(4pz)^p.
+\end{align}
+A direct Ligozat computation at the six cusps $\infty$, $0$, $1/2$, $1/4$,
+$1/p$, $1/(2p)$ of $\Gamma_0(4p)$ gives [Theorem]:
+\begin{center}
+\begin{tabular}{c|c|c}
+cusp & $\operatorname{ord}(m)$ & $\operatorname{ord}(P)$ \\ \hline
+$\infty$ & $0$ & $(p^2-1)/24$ \\
+$0$ & $0$ & $0$ \\
+$1/2$ & $(p-1)/2$ & $0$ \\
+$1/4$ & $0$ & $0$ \\
+$1/p$ & $0$ & $(p^2-1)/24$ \\
+$1/(2p)$ & $-(p-1)/2$ & $-(p^2-1)/12$
+\end{tabular}
+\end{center}
+Hence $\deg(m) = (p-1)/2$ and $\deg(P) = (p^2-1)/12$; each has its only pole
+at $1/(2p)$, and $P$ has its only zeros at $\infty$ and $1/p$. The genus of
+$X_0(4p)$ is $(p-3)/2$.
+
+The key mechanism is the Atkin--Lehner involution $w_4$ of $X_0(4p)$, attached
+to $Q = 4$. [Verified] Numerically --- eta via the pentagonal series, at 60
+digits and three test points, for each $p$ in $\{3, 5, 7, 11, 13, 17\}$ ---
+\begin{equation}
+w_4(m) = \left(\frac{-1}{p}\right)\cdot m, \qquad w_4(P) = P
+\qquad (p \geq 5),
+\label{eq:w4}
+\end{equation}
+to within $10^{-45}$ (for $p = 3$, $w_4(m) = -m$ but $w_4(P) = \zeta_3 P$).
+A proof through the eta-multiplier (Dedekind sums) for the representative of
+$w_4$ has not been written; it is the single most important missing proof in
+this template, because everything that follows depends on it. From
+\eqref{eq:w4} we obtain the rule for which variables the relation uses
+[Theorem, given \eqref{eq:w4}]: if $p \equiv 1 \pmod 4$ then $(-1/p) = +1$,
+$w_4$ fixes $m$, and the relation is in $(m,P)$; if $p \equiv 3 \pmod 4$ then
+$(-1/p) = -1$, $w_4$ sends $m \mapsto -m$, so only $Y = m^2$ is
+$w_4$-invariant and the relation is in $(Y,P)$. This fits all six cases
+($p = 3, 7, 11$ in $Y$; $p = 5, 13, 17$ in $m$).
+
+\begin{conjecture}[The degree-$p$ modular equation]
+\label{conj:template}
+For every prime $p \geq 5$, with $X = m$ if $p \equiv 1 \pmod 4$ and
+$X = Y = m^2$ if $p \equiv 3 \pmod 4$, there is an irreducible polynomial
+$F_p(X,P) \in \Z[X,P]$ with $F_p(X,P) = 0$, of the form
+\begin{equation}
+F_p(X,P) = (1-X)^{e_X} + \left(1 - \left(\frac{2}{p}\right)2^{(p-1)/2}P\right)^{e_P}
+- 1 + P\cdot X\cdot S_p(X,P),
+\label{eq:template}
+\end{equation}
+where $e_X = (p^2-1)/24$ and $e_P = (p-1)/4$ if $p \equiv 1 \pmod 4$,
+$e_P = (p-1)/2$ if $p \equiv 3 \pmod 4$, for some polynomial $S_p$; the
+support of $F_p$ is the full triangle
+$\{(i,j) : i\,e_P + j\,e_X \leq e_X e_P\}$; the curve $F_p = 0$ is the quotient
+$X_0(4p)/w_4$; and its genus is $(p-1-R')/4$, where $R' = \#\operatorname{Fix}(w_4)$.
+\end{conjecture}
+
+The parts of Conjecture~\ref{conj:template} have very different status, and we
+separate them.
+
+\emph{The exponents [Theorem, given \eqref{eq:w4} and the degree-$2$ map].}
+Since $\deg_{X_0(4p)}(P) = (p^2-1)/12$ and the map $X_0(4p) \to C$ has degree
+$2$ (proved for $p \leq 17$; see below), $\deg_C(P) = (p^2-1)/24$, which equals
+$e_X = [\,\Q(X,P):\Q(P)\,]$. Similarly $e_P = \deg_C(X)$. The $p = 13$
+``anomaly'' ($e_X = 7 > e_P = 3$) is no anomaly: $e_X$ grows like $p^2/24$
+while $e_P$ grows like $p/4$ or $p/2$, so $e_X > e_P$ for all $p \geq 11$,
+with crossover exactly at $p = 11$.
+
+\emph{The pure parts [Pattern, with a proved mechanism for the $X$-part].}
+The template \eqref{eq:template} fits all six cases, including the genus-$0$
+ones. The $X$-part is a perfect power by a proved mechanism, given
+\eqref{eq:w4}: $P$'s zeros on $C$ are the single point $(X,P) = (1,0)$ --- the
+image of the two cusps $\infty$ and $1/p$, which $w_4$ swaps, and at both of
+which $X = 1$ (since $m(\infty) = 1$ and $m(1/p) = (-1/p)$, the latter
+following from \eqref{eq:w4} and $w_4$ swapping $\infty \leftrightarrow 1/p$).
+Since $\deg_C(P) = e_X$, the fibre $P = 0$ is the single point $X = 1$ with
+multiplicity $e_X$. The $P$-part is a perfect power because $X$'s only zero on
+$X_0(4p)$ is the cusp $1/2$, which is fixed by $w_4$ (hence ramified in the
+degree-$2$ map), so $X$ has a single zero on $C$, of order $e_P$, at the
+$P$-value $P(1/2)$. The sign is $-(2/p)$: the cusp value
+$P(1/2) = (2/p)/2^{(p-1)/2}$ was verified numerically for $p = 5, 7, 11, 13, 17$
+and for $p = 19, 23$ (relative error $10^{-11}$--$10^{-24}$ at
+$\tau = 1/2 + 0.005i$), and the cusp values $m(1/p) = (-1/p)$ for
+$p = 11, 13, 17, 19, 23$ follow from the deduction above. No proof of the
+$(2/p)$ sign is known; the mechanism should be the eta-quotient cusp-value
+formula at $1/2$.
+
+\emph{The support [Pattern, 6/6].} The support of $F_p$ is the full triangle
+with vertices $(0,0)$, $(e_X,0)$, $(0,e_P)$, every monomial occurring with
+nonzero coefficient. This holds for $p = 11$ ($i+j \leq 5$, 21 monomials),
+$p = 13$ ($3i+7j \leq 21$, 17), $p = 17$ ($i+3j \leq 12$, 35), and the three
+genus-$0$ cases. No proof is known; it is a genericity statement, and the most
+``accidental''-looking part of the template. The mixed remainder's divisibility
+by $P\cdot X$ is then trivial algebra [Theorem, given the pure parts]: it
+vanishes at $X = 0$ and at $P = 0$, hence is divisible by both.
+
+\emph{The degree-$2$ map [Proved for $p \leq 17$; conjectured in general].}
+$[\C(X_0(4p)):\Q(P)] = (p^2-1)/12$ and $[\Q(X,P):\Q(P)] = e_X = (p^2-1)/24$,
+so the map $X_0(4p) \to C$ has degree $2$ in every proved case, and
+$\Q(X,P) = \operatorname{Fix}(w_4)$ since both are index-$2$ subfields. The
+general case needs only the existence of a relation $F_p$ with
+$\deg_X F_p = (p^2-1)/24$, which is what the Sturm computation produces.
+Irreducibility follows: $F_p$ is the minimal polynomial of $X$ over $\Q(P)$.
+
+\emph{The genus [Guess, and the weakest part].} By Riemann--Hurwitz for the
+degree-$2$ map, $g(C) = (p-1-R')/4$ with $R' = \#\operatorname{Fix}(w_4)$.
+Two fixed points are cusps ($1/2$ and $1/(2p)$ are fixed; $w_4$ swaps
+$\infty \leftrightarrow 1/p$ and $0 \leftrightarrow 1/4$), so
+$R' = 2 + N_{\mathrm{CM}}(p)$ with $N_{\mathrm{CM}}(p)$ the number of fixed CM
+points. The data are
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c}
+$p$ & 3 & 5 & 7 & 11 & 13 & 17 \\ \hline
+$R'$ & 2 & 4 & 6 & 2 & 4 & 4 \\
+$N_{\mathrm{CM}}(p)$ & 0 & 2 & 4 & 0 & 2 & 2 \\
+$g(C)$ & 0 & 0 & 0 & 2 & 2 & 3
+\end{tabular}
+\end{center}
+No formula for $N_{\mathrm{CM}}(p)$ was found: it is not a function of $p \bmod 4$
+($p = 7$ and $p = 11$ are both $\equiv 3 \pmod 4$ but have $N_{\mathrm{CM}} = 4$
+and $0$), nor of $p \bmod 8$. The count should come from the CM theory of $w_4$
+(class numbers of orders in $\Q(i)$ and the number of $w_4$-admissible level
+structures), but the derivation was not completed. The minimal-$R'$ prediction
+($R' = 2$ if $p \equiv 3 \pmod 4$, $R' = 4$ if $p \equiv 1 \pmod 4$) fits
+$p = 11, 13, 17$ but fails $p = 7$ (which has $R' = 6$, $g = 0$ instead of the
+predicted $g = 1$); the genus predictions below are therefore the least
+reliable part of this section.
+
+\subsection{Predictions for $p = 19$ and $p = 23$}
+
+\begin{center}
+\begin{tabular}{c|c|c}
+& $p = 19$ & $p = 23$ \\ \hline
+variables $X$ & $Y = m^2$ & $Y = m^2$ \\
+$e_X = (p^2-1)/24$ & $15$ & $22$ \\
+$e_P = (p-1)/2$ & $9$ & $11$ \\
+pure $X$-part & $(1-Y)^{15}$ & $(1-Y)^{22}$ \\
+$(2/p)$ & $-1$ ($19 \equiv 3 \bmod 8$) & $+1$ ($23 \equiv 7 \bmod 8$) \\
+pure $P$-part & $(1+512P)^9$ & $(1-2048P)^{11}$ \\
+support & $3i+5j \leq 45$ & $i+2j \leq 22$ \\
+monomials & $82$ & $144$ \\
+level / index & $\Gamma_0(76)$ / $120$ & $\Gamma_0(92)$ / $144$ \\
+genus $g(C)$, minimal-$R'$ guess & $4$ & $5$
+\end{tabular}
+\end{center}
+
+The cusp values needed for the pure parts ($m(1/p) = -1$,
+$P(1/2) = -1/512$ for $p = 19$; $P(1/2) = +1/2048$ for $p = 23$) are already
+verified numerically, as above. The test procedure is the same Sturm pipeline
+used for $p = 11, 13, 17$ (\S\ref{sec:p11eq}, \S\ref{sec:p1317}), with
+$K = \eta(2z)^2\eta(2pz)^2$ raised to a power clearing the maximal pole order
+over the predicted triangle. Each part of Conjecture~\ref{conj:template} has
+its own falsifier: a $w_4$-ratio that is not the constant $(-1/p)$ (for $m$) or
+$1$ (for $P$) kills the variable rule and the degree-$2$ identification; an
+exponent or pure part different from the prediction kills \eqref{eq:template};
+a missing interior monomial kills the support triangle (the most likely part
+to fail); a genus larger than the minimal-$R'$ prediction would falsify the
+framework itself, since $R' \geq 2$ always.
+
+\section{The $p=11$ frontier}
+\label{sec:p11}
+
+\subsection{What the modular equation does and does not give}
+
+Theorem~\ref{thm:p11} supplies Layer 3 of the uniform template for $p=11$ --- the
+modular equation relating the multiplier to $\pprod$. What it does \emph{not} give
+is the auxiliary quintic $r_{11}$ (Layer 4) or the root formula. The natural
+coefficient field for $r_{11}$ is now $\Q(Y,P)$, the function field of the genus-$2$
+curve $C$ of Theorem~\ref{thm:p11}, rather than $\Q(\pprod, Y)$ with $Y$ and
+$\pprod$ independent --- the relation $G(Y,P) = 0$ lets us reduce powers of $Y$,
+which is what makes the search for $r_{11}$ tractable. The remaining work is
+therefore: find $r_{11}$ as a quintic with coefficients in $\Q(Y,P)$, decide the
+exponent pattern (H1) vs.\ (H2), fix the root ordering, and evaluate at the
+flagship point.
+
+A remark on the earlier expectation is in order. Before Theorem~\ref{thm:p11} was
+found, it was natural to expect the $(m,\pprod)$-relation to be a genus-$1$ plane
+curve, on the grounds that $X_0(11)$ has genus $1$ and is the first prime level of
+genus $1$. That expectation was wrong in two ways: the functions $m$ and $\pprod$
+live on $X_0(44)$, not $X_0(11)$ (their eta-quotients need the factor $4$), and
+their image curve has genus $2$, not $1$ (Remark after Theorem~\ref{thm:p11}). The
+classical degree-$11$ modular equation in $\alpha,\beta$ variables (Berndt, Part
+III, Entry 7) and the many degree-$11$ equations in other variables
+(Vasuki--Yathirajsharma \cite{VY23}; Hart \cite{Hart08}) were never in doubt; what
+was missing was specifically the equation in Ramanujan's theta variables
+$(m,\pprod)$, which Theorem~\ref{thm:p11} now supplies.
+
+\subsection{The exponent puzzle}
+\label{sec:exponent}
+
+Write $u_k = (\alpha_k^a\,\pprod/\alpha_{k+1}^b)^{1/p}$ with cyclic indices. The
+proved cases give $(a,b) = (1,0)$ for $p=3,5$ (the simple form
+$u_k = (\alpha_k\pprod)^{1/p}$) but $(a,b) = (2,1)$ for $p=7$ (a genuinely cyclic
+form), and $(a,b) = (1,1)$ with root $1/3$ for the composite $p=9$. In all prime
+cases $a-b=1$ and $\prod_k \alpha_k = \pprod^{(p+1)/2}$, which is exactly what
+makes $\prod_k u_k = \pprod$. The pattern in $a$ is not determined by the proved
+cases: $a = 1,1,2$ for $p=3,5,7$ does not fix $a$ for $p=11$. The two live
+hypotheses are:
+\begin{itemize}
+\item[(H1)] \textbf{Simple form:} $u_k = (\alpha_k\pprod)^{1/11}$, i.e.\
+$\alpha_k = u_k^{11}/\pprod$, and $r_{11}(\xi) = \prod_{k=1}^5(\xi-\alpha_k)$
+has coefficients expressible in $(\pprod, Y)$.
+\item[(H2)] \textbf{Cyclic form:} $u_k = (\alpha_k^a\pprod/\alpha_{k+1}^{a-1})^{1/11}$
+for some $a \geq 2$, with $\prod \alpha_k = \pprod^6$. Then the $\alpha_k$ are
+determined by cyclic sums of the $u_k$, and the coefficients of $r_{11}$ come
+from those cyclic sums.
+\end{itemize}
+Deciding (H1) vs.\ (H2) is the first numerical experiment for the $p=11$ attack:
+compute the $u_k$ to high precision at generic $q$, form $\alpha_k = u_k^{11}/\pprod$,
+and test whether the elementary symmetric functions of the $\alpha_k$ lie in
+$\Q(\pprod, Y)$ (H1) or whether instead the cyclic monomials $u_k^a u_{k+1}^{a-1}$
+do (H2).
+
+\subsection{Galois theory}
+\label{sec:galois}
+
+For prime $p$, $\Q(\zeta_p)^+$ has degree $(p-1)/2$ and cyclic Galois group
+$(\Z/p)^\times/\{\pm 1\}$. The correct statement of the cyclicity of the auxiliary
+polynomial, visible from the proved cases, is that $r_p(\xi)$ is cyclic over its
+coefficient field $K = \Q(\pprod, Y)$ (Galois group $C_{(p-1)/2}$ acting by cyclic
+permutation of the roots). At a special point where $\pprod, Y \in \Q$, the roots
+lie in a cyclic extension of $\Q$ of degree $(p-1)/2$ --- which for $p=7$ is
+$\Q(\zeta_7)^+$, but in general need not be $\Q(\zeta_p)^+$ itself. For example, at
+the $p=5$ special point $n=1/5$, $\pprod = \sqrt5-1$, so the base field is
+$\Q(\sqrt5) = \Q(\zeta_5)^+$, and the roots lie in the degree-$4$ field
+$\Q(\sqrt5,\sqrt{10-2\sqrt5})$ --- a cyclic quadratic extension of
+$\Q(\zeta_5)^+$, not in $\Q(\zeta_5)^+$ itself. For $p=11$ at $n=1/11$, the base
+field is $\Q(G_{11})$ (a non-Galois cubic), so the roots of $r_{11}$ are expected to
+generate a cyclic quintic extension of $\Q(G_{11})$: a degree-$15$ extension of
+$\Q$, whose Galois closure is larger. This is consistent with Ramanujan's
+``quintics'' label for $11$: the \emph{radical} degree needed is $5$, not that the
+roots lie in $\Q(\zeta_{11})^+$.
+
+A cyclic extension of degree $n$ is solved by Lagrange resolvents, and for
+cyclotomic fields the resolvents are Gauss sums. Garrett \cite{Garrett10} treats the
+quintic subfield of $\Q(\zeta_{11})$ explicitly: in $\Z[\omega]$, $\omega$ a
+primitive 5th root of unity, $11 = (2+\omega)(2+\omega^2)(2+\omega^3)(2+\omega^4)$,
+and the quintic subfield is generated over $\Q(\omega_5)$ by a 5th root of an
+explicit product of these prime factors (Kummer--Eisenstein). Dummit's criterion
+\cite{Dummit91} gives a test for a quintic to be solvable (equivalently its Galois
+group contained in the Frobenius group $F_{20}$) and root formulas producing the
+roots in cyclic order; this applies verbatim over the coefficient field
+$K = \Q(\pprod, Y)$.
+
+\subsection{Negative search: no low-degree relation over $\Q(\pprod,m)$}
+
+At the flagship point $q_1 = e^{-\pi/\sqrt{11}}$ we computed
+$\pprod = 0.416439434275864095678569298496$ and $m = \sqrt{11}$ exactly
+(PSLQ degree $2$: $m^2 - 11 = 0$), and
+\begin{equation}
+u_k = 1.8352467839,\ 1.4190121186,\ 0.9294325201,\ 0.5336551405,\ 0.3223982758
+\end{equation}
+(strictly decreasing, as required).
+With $w_k = u_k^{11}/\pprod$ we have $\prod_k w_k = \pprod^6$, as required by
+either hypothesis (H1) or (H2).
+
+We searched, by integer-relation (PSLQ) at 60 digits, for a quadratic relation
+$A(\pprod,m)s_1^2 + B(\pprod,m)s_1 + C(\pprod,m) = 0$ for the power sum
+$s_1 = \sum_k w_k$, with $A,B,C$ of total degree $\leq 2$ (18 monomials) and
+$\leq 3$ (30 monomials). Candidate relations were found at $q=0.4$ but both
+\textbf{failed verification catastrophically} at other $q$ (relative errors $6$--$322$).
+They are spurious (PSLQ artefacts at 60 digits with 18--30 monomials). We conclude
+that $s_1$ for $p=11$ satisfies no low-degree quadratic relation over $\Q(\pprod,m)$
+with small coefficients. This is now understood: the coefficients of the auxiliary
+quintic live on the genus-$2$ curve $C$, not in $\Q(\pprod,m)$ with $m$ and $\pprod$
+independent --- Theorem~\ref{thm:p11} shows $Y$ and $P$ satisfy a quintic relation,
+so a relation for $s_1$ over $\Q(\pprod,m)$ alone would have to absorb that
+dependence. The method itself was validated by calibration on $p=7$: deriving the
+$s_1$-quadratic symbolically from the known $r(\xi)$ gives a relation the
+dissection's $s_1$ satisfies at $q = 0.2,\dots,0.6$ with residuals
+$\leq 10^{-45}$.
+
+\begin{remark}
+The same circle of ideas explains the classical fact, noted by Bailey--Borwein--
+Borwein \cite{BBB89}, that ``the first interesting prime for which an explicit
+solvable form is not known is the endecadic $p=11$ case.'' An explicit solvable form
+of the degree-$p$ modular equation is exactly what the theta theory needs (the
+$m$--$\pprod$ equation plus the auxiliary polynomial), and $p=11$ is the first
+prime where it is not known.
+\end{remark}
+
+\subsection{Attack plan for $p=11$}
+
+We outline the concrete steps, in order of expected payoff, for completing the
+$p=11$ theory. Steps 0 and 2 of the original plan (verify the product formula;
+find the $(m,\pprod)$ relation) are now done --- the first by
+Theorem~\ref{thm:pprod}, the second by Theorem~\ref{thm:p11}. Each remaining step
+is checkable with $q$-series to 200+ digits.
+\begin{enumerate}
+\item \textbf{Decide (H1) vs.\ (H2)} (Step 1): test whether the elementary symmetric
+functions of $\alpha_k = u_k^{11}/\pprod$ lie in $\Q(Y,P)$ (the function field of
+$C$), or whether the cyclic monomials $u_k^a u_{k+1}^{a-1}$ do. Use
+Theorem~\ref{thm:p11} to reduce powers of $Y$.
+\item \textbf{The auxiliary quintic} (Step 2): compute the power sums of
+$u_k^{11}/\pprod$ as functions on $C$ and determine $r_{11}(\xi)$; identify its
+Galois group (test cyclicity $C_5$ by Dummit's sextic criterion).
+\item \textbf{First test case} (Step 3): at $q = e^{-\pi/\sqrt{11}}$,
+$Y = 11$ and $\pprod = 4\sqrt{2}/G_{11}^{10}$ with $G_{11}$ known in cubic radicals,
+so $r_{11}$ at this point should be a quintic over $\Q(G_{11})$; compute the $u_k$
+numerically, form the candidate $\alpha_k$, and determine the quintic by integer
+relation, checking cyclicity by Dummit's sextic test.
+\item \textbf{Root ordering} (Step 4): use $u_1 > u_2 > u_3 > u_4 > u_5$ plus a
+cyclic-sum identity analogous to Reb\'ak's Lemma 3.4/3.7 to fix which cyclic ordering
+of the $\alpha_k$ (5 rotations $\times$ 2 orientations $= 10$ possibilities, versus
+$5! = 120$ total) gives the $u_k$ in decreasing order.
+\item \textbf{Assemble the identity and the special value} (Step 5): the $p=11$ theta
+identity $\varphi(q^{1/11})/\varphi(q^{11}) = 1 + \sum_{k=1}^5 u_k$ with $u_k$ as in
+\S\ref{sec:exponent}, and the special value $\varphi(e^{-11\pi\sqrt{11}})$ in terms
+of $\varphi(e^{-\pi\sqrt{11}})$ and 11th roots of Gaussian-period ratios.
+\end{enumerate}
+
+\section{Conclusion and open problems}
+\label{sec:conclusion}
+
+We have found and proved the degree-$11$, degree-$13$, and degree-$17$ modular
+equations for Ramanujan's prime-degree theta function theory --- the first three
+cases for primes $p \geq 11$ ---
+together with a general product formula valid for every odd $n$, Sturm-bound proofs
+of the multiplier relations of degrees $3$, $5$, and $7$, and a 60-digit numerical
+value for $G_{121}$. The six proved cases suggest a uniform conjectural template
+for general prime $p$ (\S\ref{sec:conjecture}), driven by the Atkin--Lehner
+involution $w_4$, with testable predictions for $p = 19$ and $p = 23$; the genus
+remains the one part of the template with no formula. The $p=11$ theory is not
+yet complete: the auxiliary quintic
+$r_{11}$, the root formula, and the flagship evaluation remain open, but
+Theorem~\ref{thm:p11} supplies the modular equation that makes them tractable, and
+the genus-$2$ curve $C$ is now the precise setting in which they live. The same
+holds, mutatis mutandis, for $p = 13$ and $p = 17$: the auxiliary polynomials
+$r_{13}$ and $r_{17}$ and their root formulas are open.
+
+We close with the open problems that, in our view, are the most promising next steps.
+\begin{openproblem}
+Determine the auxiliary quintic $r_{11}(\xi)$ with coefficients in $\Q(Y,P)$,
+decide between hypotheses (H1) and (H2) for the $p=11$ root formula, and fix the
+root ordering.
+\end{openproblem}
+\begin{openproblem}
+Evaluate $\varphi(e^{-11\pi\sqrt{11}})$ in terms of $\varphi(e^{-\pi\sqrt{11}})$
+and 11th roots of Gaussian-period ratios --- the $p=11$ analogue of Reb\'ak's
+Theorem 4.1 --- and compute $G_{1331}$ as a corollary.
+\end{openproblem}
+\begin{openproblem}
+Compute the minimal polynomial of $G_{121}$ by CM theory (Weber modular polynomial
+$\Phi_{11}$) and find a closed-form radical expression, if one exists.
+\end{openproblem}
+\begin{openproblem}
+Find a closed form for the $w_{11}$-action on $P$ in the variables $(Y,P)$, and a
+hyperelliptic model of the genus-$2$ curve $C$ of Theorem~\ref{thm:p11}.
+\end{openproblem}
+\begin{openproblem}
+Prove Conjecture~\ref{conj:template} (the uniform template for general prime $p$,
+\S\ref{sec:conjecture}) --- or determine the first prime at which it fails.
+The dissection is proved, the product formula is Theorem~\ref{thm:pprod}, and the
+modular equation is proved for $p = 11, 13, 17$ (Theorems~\ref{thm:p11},
+\ref{thm:p13}, \ref{thm:p17}); the remaining parts are the auxiliary polynomial
+of degree $(p-1)/2$ with cyclic Galois group and the cyclic $p$th-root formula.
+\end{openproblem}
+\begin{openproblem}
+Prove the $w_4$-action \eqref{eq:w4} through the eta-multiplier (Dedekind sums)
+for a representative of the Atkin--Lehner involution $w_4$ of $X_0(4p)$ --- the
+single most important missing proof in the template of \S\ref{sec:conjecture},
+from which the variable rule, the pure-part exponents, and the degree-$2$ map
+all follow.
+\end{openproblem}
+\begin{openproblem}
+Derive $N_{\mathrm{CM}}(p) = \#\operatorname{Fix}(w_4) - 2$ from the CM
+fixed-point theory of $w_4$ on $X_0(4p)$, turning the genus in
+Conjecture~\ref{conj:template} from a minimal-$R'$ guess into a prediction; in
+particular, predict $g(C)$ for $p = 19$ and $p = 23$ before the Sturm
+computations are run.
+\end{openproblem}
+\begin{openproblem}
+Extend the Sturm-bound prover to $\Gamma(2)$ (half-integer eta products and
+resultant elimination) to complete the proof of Schr\"oter's degree-$11$ modular
+equation. (The theta-variable degree-$17$ equation is now
+Theorem~\ref{thm:p17}; the classical degree-$17$ equations of Entry 12 in
+$(\alpha,\beta)$ variables are a separate matter.)
+\end{openproblem}
+
+\section*{Acknowledgments}
+The author thanks Bruce C.~Berndt, \H{o}rs Reb\'ak, and Sun Kim for the papers on
+which this work builds, and the Ramanujan community for keeping the notebooks alive.
+The numerical computations were carried out in Python with \texttt{sympy} and
+\texttt{mpmath}; the author used AI assistance for code and drafting, with all
+mathematical claims verified independently against the cited sources and by
+recomputation. All scripts are available from the author on request.
+
+\begin{thebibliography}{99}
+
+\bibitem{BR25} B.~C.~Berndt and \H{o}.~Reb\'ak, \emph{Cubic and quintic analogues of
+Ramanujan's septic theta function identity}, Ramanujan J. \textbf{66} (2025), art.~66.
+DOI: 10.1007/s11139-024-01013-2. arXiv:2312.15513.
+
+\bibitem{Reb23} \H{o}.~Reb\'ak, \emph{The three missing terms in Ramanujan's septic
+theta function identity}, Ramanujan J. \textbf{60} (2023), 885--911.
+DOI: 10.1007/s11139-022-00584-2. arXiv:2112.11884.
+
+\bibitem{KR25} S.~Kim and \H{o}.~Reb\'ak, \emph{Ninth degree analogue of Ramanujan's
+septic theta function identity}, arXiv:2506.01181 (2025).
+
+\bibitem{Son01} S.~H.~Son, \emph{Septic theta function identities in Ramanujan's lost
+notebook}, Acta Arith. \textbf{98} (2001), 361--374.
+
+\bibitem{BerndtIII} B.~C.~Berndt, \emph{Ramanujan's Notebooks, Part III}, Springer,
+1991. DOI: 10.1007/978-1-4612-0965-2.
+
+\bibitem{BBB89} D.~H.~Bailey, J.~M.~Borwein, and P.~B.~Borwein, \emph{Ramanujan,
+modular equations, and approximations to $\pi$}, Amer. Math. Monthly \textbf{96}
+(1989), 201--219.
+
+\bibitem{Hart08} W.~B.~Hart, \emph{Schl\"afli modular equations for generalized Weber
+functions}, Ramanujan J. \textbf{15} (2008), 435--468.
+DOI: 10.1007/s11139-007-9087-8.
+
+\bibitem{Garrett10} P.~Garrett, \emph{Kummer theory and Eisenstein series}, 2010.
+\url{https://www-users.cse.umn.edu/~garrett/m/v/kummer_eis.pdf}
+
+\bibitem{Dummit91} D.~S.~Dummit, \emph{Solving solvable quintics}, Math. Comp.
+\textbf{57} (1991), 387--401.
+
+\bibitem{VY23} K.~R.~Vasuki and M.~V.~Yathirajsharma, \emph{Crossed out modular
+equations of degree 11 of Ramanujan}, Ramanujan J. \textbf{61} (2023), 1145--1150.
+DOI: 10.1007/s11139-022-00630-z.
+
+\bibitem{BR21} B.~C.~Berndt and \H{o}.~Reb\'ak, \emph{Explicit values for Ramanujan's
+theta function $\varphi(q)$}, Hardy--Ramanujan J. \textbf{44} (2021), 41--50.
+DOI: 10.46298/hrj.2022.8923. arXiv:2112.11882.
+
+\end{thebibliography}
+
+\end{document}
